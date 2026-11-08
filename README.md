@@ -2,7 +2,7 @@
 
 Aplikasi monolit **Laravel 13 + MySQL** untuk mengelola peternakan kambing: inventaris, barcode, pembelian, penjualan, pembayaran, beban, laporan keuangan, dan pengaturan. Antarmuka sepenuhnya server-side (Blade) dengan Bahasa Indonesia, format Rupiah, dan tanggal Indonesia.
 
-> Prototipe frontend awal diarsipkan di folder `legacy-prototype/` dan ditandai dengan tag git `prototype-v1`.
+> Prototipe frontend awal diarsipkan pada tag git `prototype-v1` (tidak lagi berada di working tree).
 
 ## Fitur
 

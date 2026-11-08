@@ -5,8 +5,8 @@ Kamsya is a Laravel 13 Blade monolith for goat-farm inventory and finance. All U
 ## Stack & layout
 
 - PHP 8.3, Laravel 13, MySQL database `kamsya_db`. No SPA and no API layer — controllers return Blade views.
-- Frontend assets are hand-written in `public/assets/css|js`. The Vite/Tailwind scaffold (`package.json`, `vite.config.js`, `resources/css|js`) is unused — do **not** run `npm build`; edit `public/assets` directly.
-- Old frontend prototype lives in ignored `legacy-prototype/` (tag `prototype-v1`). Do not copy code from it.
+- No Node/Vite/Tailwind step exists. Frontend assets are hand-written in `public/assets/css|js` — edit those directly and do not reintroduce npm tooling unless explicitly requested.
+- The old frontend prototype is preserved by the git tag `prototype-v1`; it is not in the working tree. Do not copy code from it.
 - Domain logic belongs in `app/Services/*` (Goat, Purchase, Sale, Payment, Expense, Report, Backup, Sequence, ActivityLogger). Controllers stay thin; don't duplicate stock/payment/report calculations.
 - `README.md` documents setup and features for humans; keep it in sync when changing setup or reference figures.
 
