@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <form method="GET" action="{{ route('goats.labels') }}" class="print-layout">
+    <form method="GET" action="{{ route('goats.labels') }}" class="print-layout label-format-{{ $format }}" data-label-format-form>
         <section class="card print-controls no-print">
             <div class="card-header">
                 <div>
@@ -28,6 +28,22 @@
                     <p>{{ count($selected) }} kambing dipilih</p>
                 </div>
                 <span class="badge badge-neutral">{{ $allGoats->count() }} kambing</span>
+            </div>
+            <div class="label-format-row">
+                <div class="label-format-copy">
+                    <strong>Format label</strong>
+                    <small>Pilih jenis kode yang akan dicetak pada label.</small>
+                </div>
+                <div class="segmented" role="group" aria-label="Format label">
+                    <label>
+                        <input type="radio" name="format" value="barcode" @checked($format === 'barcode')>
+                        <span><x-icon name="barcode" :size="14" /> Barcode</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="format" value="qr" @checked($format === 'qr')>
+                        <span><x-icon name="qr" :size="14" /> QR Code</span>
+                    </label>
+                </div>
             </div>
             <div class="picker-tools">
                 <div class="search-field">
@@ -38,7 +54,7 @@
                     <button type="button" class="btn btn-ghost btn-sm" data-check-all='[name="goats[]"]'>
                         <x-icon name="check" :size="15" /> Pilih semua
                     </button>
-                    <a class="btn btn-ghost btn-sm" href="{{ route('goats.labels') }}">
+                    <a class="btn btn-ghost btn-sm" href="{{ route('goats.labels', ['format' => $format]) }}">
                         <x-icon name="x" :size="15" /> Kosongkan
                     </a>
                 </div>
@@ -75,6 +91,7 @@
                     <p>Label siap dicetak dengan barcode unik setiap kambing</p>
                 </div>
                 <div class="preview-head-actions" style="display: flex; align-items: center; gap: 8px;">
+                    <span class="badge badge-neutral" data-label-format-badge>{{ $format === 'qr' ? 'QR Code' : 'Barcode' }}</span>
                     <span class="badge badge-success">{{ $goats->count() }} label</span>
                     <button type="button" class="btn btn-primary btn-sm" data-print="labels" @disabled($goats->isEmpty())>
                         <x-icon name="printer" :size="15" /> Cetak
@@ -108,6 +125,9 @@
                                 <div class="label-barcode">
                                     <div class="barcode-svg" data-barcode="{{ $item->barcode }}" data-barcode-height="54" data-barcode-module="2.2"></div>
                                 </div>
+                                <div class="label-qr">
+                                    <div class="qr-code" data-qr="{{ $item->barcode }}" data-qr-size="160"></div>
+                                </div>
                                 <div class="label-code">{{ $item->barcode }}</div>
                                 <div class="label-foot">{{ $settings->phone }} · {{ $settings->address }}</div>
                             </article>
@@ -122,3 +142,7 @@
         </section>
     </form>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('assets/js/qrcode.min.js') }}"></script>
+@endpush

@@ -266,6 +266,52 @@
     });
   }
 
+  /* --------------------------------- QR codes -------------------------------- */
+
+  function renderQrCodes() {
+    document.querySelectorAll('[data-qr]').forEach((node) => {
+      if (node.dataset.qrRendered === '1') return;
+
+      const value = node.getAttribute('data-qr');
+      if (!value || typeof QRCode === 'undefined') return;
+
+      const size = Number(node.getAttribute('data-qr-size')) || 120;
+      node.innerHTML = '';
+      new QRCode(node, {
+        text: value,
+        width: size,
+        height: size,
+        colorDark: '#111827',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M,
+      });
+      node.dataset.qrRendered = '1';
+    });
+  }
+
+  function initLabelFormat() {
+    const form = document.querySelector('[data-label-format-form]');
+    if (!form) return;
+
+    const badge = document.querySelector('[data-label-format-badge]');
+    const inputs = form.querySelectorAll('input[name="format"]');
+
+    const apply = (format) => {
+      const isQr = format === 'qr';
+      form.classList.toggle('label-format-qr', isQr);
+      form.classList.toggle('label-format-barcode', !isQr);
+      if (badge) badge.textContent = isQr ? 'QR Code' : 'Barcode';
+      if (isQr) renderQrCodes();
+    };
+
+    inputs.forEach((input) => {
+      input.addEventListener('change', () => apply(input.value));
+    });
+
+    const checked = form.querySelector('input[name="format"]:checked');
+    apply(checked ? checked.value : 'barcode');
+  }
+
   /* ---------------------------------- Print --------------------------------- */
 
   function initPrint() {
@@ -383,6 +429,7 @@
     initModals();
     initConfirmForms();
     initBarcodes();
+    initLabelFormat();
     initPrint();
     initCheckAll();
     initLabelFilter();

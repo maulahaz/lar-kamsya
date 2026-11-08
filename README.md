@@ -9,7 +9,7 @@ Aplikasi monolit **Laravel 13 + MySQL** untuk mengelola peternakan kambing: inve
 - **Dashboard** — ringkasan stok, penjualan, laba, piutang, utang, grafik bulanan, dan peringatan stok rendah.
 - **Inventaris kambing** — data kambing, pencarian/filter, detail riwayat, arsip (soft delete), dan peranakan.
 - **Scan barcode** — pencarian cepat berdasarkan barcode, dengan pencatatan log scan.
-- **Cetak barcode** — pilih kambing, pratinjau label A4, dan cetak langsung dari browser.
+- **Cetak barcode** — pilih kambing, pilih format **Barcode atau QR Code**, pratinjau label A4, dan cetak langsung dari browser.
 - **Pembelian** — pembuatan pembelian sekaligus kambing baru, biaya tambahan, pembayaran penuh/sebagian, dan void.
 - **Penjualan** — penjualan kambing tersedia, snapshot HPP permanen, pembayaran penuh/sebagian, dan void.
 - **Pembayaran** — pelunasan piutang/utang dengan validasi overpayment dan void.

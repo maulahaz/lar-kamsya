@@ -97,6 +97,27 @@ class PageSmokeTest extends TestCase
         }
     }
 
+    public function test_labels_page_supports_barcode_and_qr_formats(): void
+    {
+        $owner = User::query()->where('email', 'owner@kamsya.id')->first();
+
+        $qr = $this->actingAs($owner)->get(route('goats.labels', ['format' => 'qr']));
+        $qr->assertStatus(200);
+        $qr->assertSee('label-format-qr', false);
+        $qr->assertSee('data-qr=', false);
+        $qr->assertSee('assets/js/qrcode.min.js', false);
+        $qr->assertSee('QR Code');
+
+        $barcode = $this->actingAs($owner)->get(route('goats.labels', ['format' => 'barcode']));
+        $barcode->assertStatus(200);
+        $barcode->assertSee('label-format-barcode', false);
+        $barcode->assertDontSee('label-format-qr', false);
+
+        $fallback = $this->actingAs($owner)->get(route('goats.labels', ['format' => 'invalid']));
+        $fallback->assertStatus(200);
+        $fallback->assertSee('label-format-barcode', false);
+    }
+
     public function test_create_pages_for_transactions(): void
     {
         $owner = User::query()->where('email', 'owner@kamsya.id')->first();

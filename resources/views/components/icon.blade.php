@@ -5,6 +5,7 @@
         'goat' => '<path d="M7 9C5.5 7.4 5.2 4.5 7 4.5c1.4 0 2 1.4 2.3 2.5"/><path d="M17 9c1.5-1.6 1.8-4.5 0-4.5-1.4 0-2 1.4-2.3 2.5"/><path d="M8 7.5h8a5 5 0 0 1-2.4 7.8V19h-3.2v-3.7A5 5 0 0 1 8 7.5Z"/><path d="M10.4 12.4h.01M13.6 12.4h.01"/>',
         'package' => '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4.3 7.6 7.7 4.3 7.7-4.3M12 21v-9.1"/>',
         'barcode' => '<path d="M4 6v12M7 6v12M10 6v8M13 6v12M17 6v8M20 6v12"/>',
+        'qr' => '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 19v2"/>',
         'scan' => '<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M4 12h16"/>',
         'printer' => '<path d="M6 9V4h12v5"/><path d="M6 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1"/><rect x="6" y="14" width="12" height="7" rx="1"/>',
         'cart' => '<circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/><path d="M3 4h2l2.3 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H6"/>',

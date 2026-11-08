@@ -138,6 +138,8 @@ class GoatController extends Controller
             ->map(fn ($id) => (int) $id)
             ->all();
 
+        $format = $request->query('format') === 'qr' ? 'qr' : 'barcode';
+
         $goats = Goat::query()
             ->when($selected, fn ($query) => $query->whereIn('id', $selected))
             ->orderBy('code')
@@ -151,6 +153,7 @@ class GoatController extends Controller
             'goats' => $goats,
             'selected' => $selected,
             'allGoats' => Goat::query()->orderBy('code')->get(),
+            'format' => $format,
         ]);
     }
 
