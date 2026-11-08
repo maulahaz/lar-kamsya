@@ -45,7 +45,7 @@
                     <div class="search-field scan-input-field">
                         <x-icon name="barcode" :size="19" />
                         <input id="scan-input" type="text" name="code" inputmode="numeric" autocomplete="off" maxlength="24"
-                               placeholder="Contoh: 899100001" value="{{ $code }}" autofocus aria-label="Nomor barcode kambing">
+                               placeholder="      Contoh: 899100001" value="{{ $code }}" autofocus aria-label="Nomor barcode kambing">
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <x-icon name="scan" :size="17" /> Scan

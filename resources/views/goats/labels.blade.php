@@ -32,7 +32,7 @@
             <div class="picker-tools">
                 <div class="search-field">
                     <x-icon name="search" :size="17" />
-                    <input type="search" placeholder="Cari nama, kode, barcode…" aria-label="Cari kambing untuk dicetak" data-filter-labels>
+                    <input type="search" placeholder="     Cari nama, kode, barcode…" aria-label="Cari kambing untuk dicetak" data-filter-labels>
                 </div>
                 <div class="picker-actions">
                     <button type="button" class="btn btn-ghost btn-sm" data-check-all='[name="goats[]"]'>

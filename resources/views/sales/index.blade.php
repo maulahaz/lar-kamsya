@@ -42,7 +42,7 @@
         <form class="card-toolbar" method="GET" action="{{ route('sales.index') }}">
             <div class="search-field">
                 <x-icon name="search" :size="17" />
-                <input type="search" name="q" value="{{ $search }}" placeholder="Cari nomor transaksi, customer, kambing, atau barcode…" aria-label="Cari transaksi penjualan">
+                <input type="search" name="q" value="{{ $search }}" placeholder="     Cari nomor transaksi, customer, kambing, atau barcode…" aria-label="Cari transaksi penjualan">
             </div>
             <div class="filter-group">
                 <select class="filter-select" name="status" aria-label="Filter status" data-auto-submit>

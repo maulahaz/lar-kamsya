@@ -40,7 +40,7 @@
         <form class="card-toolbar" method="GET" action="{{ route('users.index') }}">
             <div class="search-field">
                 <x-icon name="search" :size="17" />
-                <input type="search" name="q" value="{{ $search }}" placeholder="Cari nama atau email pengguna…" aria-label="Cari pengguna">
+                <input type="search" name="q" value="{{ $search }}" placeholder="     Cari nama atau email pengguna…" aria-label="Cari pengguna">
             </div>
             <div class="filter-group">
                 <button type="submit" class="btn btn-outline btn-sm"><x-icon name="search" :size="15" /> Cari</button>
