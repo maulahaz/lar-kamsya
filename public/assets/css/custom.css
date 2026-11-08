@@ -1,0 +1,463 @@
+/* ==========================================================================
+   Kamsya — application additions on top of the prototype design system
+   ========================================================================== */
+
+/* ---------------------------------- Flash --------------------------------- */
+
+.flash-stack {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* --------------------------------- Pagination ------------------------------ */
+
+.pagination-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.pagination-info {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.pagination-info strong {
+  color: var(--text);
+}
+
+.pagination a.page-btn,
+.pagination span.page-btn {
+  text-decoration: none;
+}
+
+/* ------------------------------- Empty tables ----------------------------- */
+
+.empty-row {
+  padding: 34px 18px !important;
+  text-align: center;
+}
+
+.empty-row .empty-state {
+  padding: 0;
+}
+
+/* ------------------------------ Detail helpers ---------------------------- */
+
+.detail-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.stack-sm {
+  display: grid;
+  gap: 8px;
+}
+
+.summary-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.summary-box {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+}
+
+.summary-box > span {
+  display: block;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.summary-box > strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.summary-box.is-positive > strong {
+  color: var(--brand-700);
+}
+
+.summary-box.is-negative > strong {
+  color: var(--red-600);
+}
+
+.inline-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.void-note {
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--red-50);
+  color: var(--red-600);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.archived-badge {
+  filter: grayscale(0.2);
+}
+
+/* ---------------------------------- Tabs ---------------------------------- */
+
+.tab-nav {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  overflow-x: auto;
+}
+
+.tab-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tab-link:hover {
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+.tab-link.is-active {
+  background: var(--brand-700);
+  color: #fff;
+}
+
+/* ---------------------------------- Auth ---------------------------------- */
+
+.auth-body {
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(34, 197, 94, 0.14), transparent 55%),
+    linear-gradient(160deg, #f5f7f3 0%, #eef3ea 100%);
+}
+
+.auth-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  min-height: 100vh;
+}
+
+.auth-brand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 46px 54px;
+  color: var(--sidebar-text);
+  background:
+    radial-gradient(110% 80% at 0% 0%, rgba(34, 197, 94, 0.2), transparent 55%),
+    linear-gradient(180deg, #0c261b, #081d14 100%);
+  overflow: hidden;
+}
+
+.auth-brand::after {
+  content: "";
+  position: absolute;
+  right: -140px;
+  bottom: -160px;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  border: 1px solid rgba(134, 239, 172, 0.16);
+  box-shadow: 0 0 0 70px rgba(134, 239, 172, 0.04), 0 0 0 140px rgba(134, 239, 172, 0.03);
+}
+
+.auth-brand-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-logo {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(74, 222, 128, 0.24), rgba(34, 197, 94, 0.08));
+  box-shadow: inset 0 0 0 1px rgba(134, 239, 172, 0.24);
+  font-size: 24px;
+}
+
+.auth-brand-top strong {
+  display: block;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.auth-brand-top span {
+  display: block;
+  color: var(--sidebar-muted);
+  font-size: 11.5px;
+}
+
+.auth-brand-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+}
+
+.auth-brand-copy h1 {
+  color: #fff;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.auth-brand-copy p {
+  margin-top: 14px;
+  color: var(--sidebar-text);
+  font-size: 14px;
+}
+
+.auth-features {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 12px;
+  list-style: none;
+}
+
+.auth-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--sidebar-text);
+  font-size: 13px;
+}
+
+.auth-features .icon {
+  color: var(--brand-300);
+}
+
+.auth-brand-foot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--sidebar-muted);
+  font-size: 11.5px;
+}
+
+.auth-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding: 40px 32px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-heading .eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.auth-heading h2 {
+  font-size: 23px;
+  letter-spacing: -0.02em;
+}
+
+.auth-heading p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.auth-card .inline-alert {
+  margin: 16px 0 0;
+}
+
+.auth-form {
+  margin-top: 20px;
+  gap: 16px;
+}
+
+.auth-remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.auth-remember input {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--brand-600);
+}
+
+.auth-demo {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--line);
+}
+
+.auth-demo-grid {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.auth-demo-grid > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
+  font-size: 12px;
+}
+
+.auth-demo-grid strong {
+  color: var(--text);
+}
+
+.auth-demo-grid span {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+}
+
+.auth-foot {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+/* ------------------------------ Misc tweaks -------------------------------- */
+
+.check-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.check-row input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brand-600);
+}
+
+.data-action form {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.data-action form label.btn {
+  margin: 0;
+}
+
+.data-table .cell-actions form {
+  display: inline-flex;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.badge-soft {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: -0.01em;
+}
+
+.chart-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1024px) {
+  .auth-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .auth-brand {
+    display: none;
+  }
+
+  .auth-panel {
+    min-height: 100vh;
+  }
+
+  .chart-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .auth-panel {
+    padding: 22px 14px;
+  }
+
+  .auth-card {
+    padding: 22px 18px;
+  }
+
+  .summary-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media print {
+  .auth-body {
+    background: #fff;
+  }
+}
