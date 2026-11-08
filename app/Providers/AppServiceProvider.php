@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'purchase' => \App\Models\Purchase::class,
             'sale' => \App\Models\Sale::class,
+            'user' => User::class,
         ]);
 
         Gate::define('view-reports', fn (User $user) => $user->canManageFinance());

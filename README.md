@@ -84,26 +84,57 @@ Buka `http://localhost:8000`.
 | Piutang | Rp1.400.000 |
 | Utang | Rp2.400.000 |
 
+## API untuk Aplikasi Flutter
+
+Selain antarmuka Blade, tersedia REST API JSON di prefix `/api/v1` untuk aplikasi Android (Flutter).
+API bersifat **additive**: tidak mengubah struktur web dan memakai ulang model, service, policy,
+serta gate yang sama, sehingga aturan stok, pembayaran, dan angka laporan tetap identik.
+
+- Autentikasi token **Laravel Sanctum** (Bearer), satu token per perangkat, berlaku 30 hari.
+- Semua pesan validasi/error dalam Bahasa Indonesia.
+- Binding resource memakai kode dokumen (`KMB-0001`, `TRX-B-2026-001`), kecuali pembayaran dan pengguna yang memakai `id`.
+- Laporan tersedia sebagai JSON (tanpa unduhan PDF/CSV).
+
+```bash
+# Login
+curl -X POST http://localhost:8000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"owner@kamsya.id","password":"kamsya123","device_name":"flutter"}'
+
+# Contoh request terautentikasi
+curl http://localhost:8000/api/v1/dashboard -H "Authorization: Bearer <token>"
+```
+
+Dokumentasi lengkap (endpoint, payload, hak akses, catatan integrasi Flutter): [`docs/API.md`](docs/API.md).
+Masa berlaku token dapat diubah lewat `SANCTUM_EXPIRATION` (menit; default `43200` = 30 hari).
+
 ## Pengujian
 
 ```bash
 php artisan test
 ```
 
-Pengujian menggunakan SQLite in-memory (`phpunit.xml`) dengan `RefreshDatabase`, sehingga tidak menyentuh basis data MySQL pengembangan. Cakupan tes mencakup autentikasi, otorisasi per peran, alur pembelian/penjualan/pembayaran/void, total laporan, ekspor CSV/PDF, serta ekspor/impor cadangan.
+Pengujian menggunakan SQLite in-memory (`phpunit.xml`) dengan `RefreshDatabase`, sehingga tidak menyentuh basis data MySQL pengembangan. Cakupan tes mencakup autentikasi, otorisasi per peran, alur pembelian/penjualan/pembayaran/void, total laporan, ekspor CSV/PDF, ekspor/impor cadangan, serta seluruh endpoint API (`tests/Feature/Api`).
 
 ## Struktur Penting
 
 ```
 app/
 ├── Enums/                 # UserRole, GoatStatus, PaymentMethod, dll.
-├── Http/Controllers/      # Controller per modul
-├── Http/Requests/         # Validasi form
+├── Http/Controllers/      # Controller per modul (Blade)
+├── Http/Controllers/Api/V1/ # Controller JSON API v1
+├── Http/Middleware/       # Middleware web & API
+├── Http/Requests/         # Validasi form (dipakai web & API)
+├── Http/Resources/        # Serialisasi JSON API
 ├── Models/                # Eloquent model
 ├── Policies/              # Otorisasi per peran
 └── Services/              # Logika transaksi, laporan, cadangan, sequence
 resources/views/           # Blade: dashboard, kambing, transaksi, laporan, dll.
 public/assets/             # CSS & JS tanpa build step
+routes/web.php             # Route Blade
+routes/api.php             # Route JSON API /api/v1
+lang/id/                   # Pesan validasi Bahasa Indonesia
+docs/API.md                # Dokumentasi API untuk klien Flutter
 database/seeders/          # UserSeeder & DemoDataSeeder
 ```
 

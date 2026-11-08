@@ -21,7 +21,7 @@ class ActivityLogger
         }
 
         return ActivityLog::query()->create([
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id() ?? request()->user()?->id(),
             'action' => $action,
             'subject_type' => $subject ? $subject::class : null,
             'subject_id' => $subject?->getKey(),
