@@ -1,116 +1,116 @@
-# Kamsya — Prototype Manajemen & Jual-Beli Kambing
+# Kamsya — Manajemen Peternakan & Jual-Beli Kambing
 
-Prototype aplikasi web **frontend-only** untuk mengelola inventaris kambing, transaksi pembelian/penjualan, supplier, customer, barcode, dan laporan usaha peternakan.
+Aplikasi monolit **Laravel 13 + MySQL** untuk mengelola peternakan kambing: inventaris, barcode, pembelian, penjualan, pembayaran, beban, laporan keuangan, dan pengaturan. Antarmuka sepenuhnya server-side (Blade) dengan Bahasa Indonesia, format Rupiah, dan tanggal Indonesia.
 
-Aplikasi ini dibuat berdasarkan PRD `mhz/lar-kamsya-PRD.md` sebagai gambaran alur dan tampilan MVP. Seluruh data disimpan di **localStorage** browser, tanpa backend, database, autentikasi, API, atau integrasi pihak ketiga.
+> Prototipe frontend awal diarsipkan di folder `legacy-prototype/` dan ditandai dengan tag git `prototype-v1`.
 
-## Cara Menjalankan
+## Fitur
 
-### 1. Langsung buka file
+- **Dashboard** — ringkasan stok, penjualan, laba, piutang, utang, grafik bulanan, dan peringatan stok rendah.
+- **Inventaris kambing** — data kambing, pencarian/filter, detail riwayat, arsip (soft delete), dan peranakan.
+- **Scan barcode** — pencarian cepat berdasarkan barcode, dengan pencatatan log scan.
+- **Cetak barcode** — pilih kambing, pratinjau label A4, dan cetak langsung dari browser.
+- **Pembelian** — pembuatan pembelian sekaligus kambing baru, biaya tambahan, pembayaran penuh/sebagian, dan void.
+- **Penjualan** — penjualan kambing tersedia, snapshot HPP permanen, pembayaran penuh/sebagian, dan void.
+- **Pembayaran** — pelunasan piutang/utang dengan validasi overpayment dan void.
+- **Beban operasional** — kategori beban, pencatatan, dan void.
+- **Supplier & customer** — master data dengan riwayat transaksi.
+- **Laporan** — laba rugi, arus kas, piutang, utang, laba per kambing, penjualan, pembelian, dan valuasi stok.
+  - Ekspor **CSV** dan **PDF** untuk semua tab laporan.
+- **Pengaturan** — profil peternakan, ekspor/impor cadangan JSON, dan statistik data.
+- **Pengguna & peran** — Owner, Admin, Petugas Kandang dengan otorisasi server-side.
+- **Log aktivitas** — jejak audit aksi penting (khusus Owner).
 
-Buka `index.html` di browser modern (Chrome, Edge, Firefox, atau Safari). Aplikasi dapat berjalan langsung dari filesystem dan tetap bekerja setelah seluruh aset dimuat.
+## Peran & Hak Akses
 
-### 2. Lewat server statis lokal (disarankan)
+| Peran | Dashboard | Inventaris & Scan | Cetak Barcode | Transaksi & Laporan | Pengguna/Pengaturan/Aktivitas |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| Owner | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Admin | ✅ | ✅ | ✅ | ✅ | ❌ |
+| Petugas Kandang | ✅ | ✅ | ✅ | ❌ | ❌ |
 
-Menjalankan lewat server statis memberi perilaku yang lebih konsisten, terutama untuk unduh/impor backup.
+## Kebutuhan Sistem
+
+- PHP **8.3+** dengan ekstensi `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `gd`/`dom` untuk PDF.
+- MySQL **8.x** (nama basis data: `kamsya_db`).
+- Composer 2.x.
+- Tidak diperlukan Node.js/Vite; aset CSS/JS disajikan langsung dari `public/assets`.
+
+## Instalasi
 
 ```bash
-# Node.js
-npx serve .
+# 1. Dependensi
+composer install
 
-# atau Python
-python -m http.server 8080
+# 2. Konfigurasi lingkungan
+copy .env.example .env        # Windows
+# cp .env.example .env        # Linux/macOS
+php artisan key:generate
+
+# 3. Buat database
+mysql -u root -e "CREATE DATABASE kamsya_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# 4. Migrasi + data demo
+php artisan migrate:fresh --seed
+
+# 5. Jalankan
+php artisan serve
 ```
 
-Lalu buka `http://localhost:8080` (atau port yang ditampilkan).
+Buka `http://localhost:8000`.
 
-> Tidak perlu `npm install`, build step, atau koneksi internet. Semua CSS, JavaScript, ikon, dan generator barcode dibuat lokal.
+### Akun Demo
 
-## Halaman & Fitur
+| Peran | Email | Kata sandi |
+| --- | --- | --- |
+| Owner | `owner@kamsya.id` | `kamsya123` |
+| Admin | `admin@kamsya.id` | `kamsya123` |
+| Petugas Kandang | `petugas@kamsya.id` | `kamsya123` |
 
-| Halaman | Fungsi |
-| --- | --- |
-| **Dashboard** | Ringkasan stok, transaksi, estimasi keuntungan, grafik arus transaksi, dan transaksi terbaru. |
-| **Data Kambing** | CRUD kambing, pencarian, filter, pagination, detail kambing, riwayat transaksi, dan status kepemilikan. |
-| **Scan Barcode** | Simulasi pemindaian dengan input manual nomor barcode/ID, riwayat scan, dan tautan ke detail kambing. |
-| **Cetak Barcode** | Pilih kambing, pratinjau label, dan cetak barcode Code 39 (ukuran label dapat dipilih). |
-| **Pembelian** | Catat pembelian kambing baru beserta supplier, harga, dan biaya tambahan; otomatis membuat data kambing. |
-| **Penjualan** | Jual kambing berstatus tersedia, hitung estimasi keuntungan, dan ubah status menjadi `Terjual`. |
-| **Supplier** | CRUD supplier dengan validasi penghapusan jika masih dipakai transaksi. |
-| **Customer** | CRUD customer dengan validasi penghapusan jika masih dipakai transaksi. |
-| **Laporan** | Filter rentang tanggal, ringkasan pembelian/penjualan/laba kotor, rincian transaksi, dan cetak laporan. |
-| **Pengaturan** | Identitas peternakan, prefix barcode, batas stok rendah, ekspor/impor JSON, dan reset data demo. |
-
-### Aturan bisnis utama
-
-- Setiap kambing memiliki **barcode unik** yang dibuat otomatis dan tidak berubah saat data diedit.
-- Asal kambing terdiri dari **Pembelian** dan **Peranakan**.
-  - Kambing pembelian otomatis memiliki transaksi pembelian.
-  - Kambing peranakan wajib memilih induk betina terdaftar dan **tidak** membuat transaksi pembelian.
-- Kambing yang sudah dijual berstatus **Terjual**, tetap tersimpan sebagai riwayat, dan tidak dapat dijual ulang.
-- Laba kotor dihitung dari `harga jual − harga beli` (harga beli disimpan sebagai snapshot pada transaksi penjualan).
-- Kambing yang menjadi induk tidak dapat dihapus sebelum relasi induk pada anaknya diubah.
-- Supplier/customer yang masih terhubung ke transaksi tidak dapat dihapus.
+> Ganti kata sandi akun demo sebelum digunakan di lingkungan nyata.
 
 ## Data Demo
 
-Saat pertama dibuka, aplikasi mengisi data contoh:
+`DemoDataSeeder` mengisi 5 supplier, 8 customer, 15 kambing, 10 pembelian, 5 penjualan, 15 pembayaran, dan 5 beban. Angka acuan laporan:
 
-- 15 kambing (pembelian dan peranakan)
-- 5 supplier
-- 8 customer
-- 10 transaksi pembelian
-- 5 transaksi penjualan
+| Metrik | Nilai |
+| --- | ---: |
+| Penjualan | Rp12.400.000 |
+| HPP | Rp7.550.000 |
+| Laba kotor | Rp4.850.000 |
+| Beban operasional | Rp1.150.000 |
+| Laba bersih | Rp3.700.000 |
+| Nilai stok | Rp19.575.000 |
+| Piutang | Rp1.400.000 |
+| Utang | Rp2.400.000 |
 
-Data disimpan pada key localStorage `kamsya.state.v1`. Jika localStorage tidak tersedia, aplikasi memakai penyimpanan sementara di memori.
+## Pengujian
 
-### Mengembalikan data demo
-
-Buka **Pengaturan → Data & Cadangan → Reset Data Demo**. Tombol ini menghapus perubahan lokal dan memuat ulang data contoh.
-
-### Ekspor / impor
-
-- **Ekspor JSON** mengunduh seluruh state aplikasi sebagai file backup.
-- **Impor JSON** memulihkan state dari file backup Kamsya yang valid.
-- **Reset** mengembalikan data demo awal.
-
-## Catatan Prototype
-
-- **Frontend-only:** tidak ada backend Laravel, database, API, login, atau sinkronisasi antarperangkat.
-- **Scan barcode disimulasikan:** kamera perangkat tidak digunakan. Masukkan nomor barcode secara manual (contoh: `899100001`) atau klik contoh barcode yang tersedia.
-- **Barcode Code 39** digambar sebagai SVG lokal di `assets/js/barcode.js`, sehingga tetap dapat dicetak tanpa internet.
-- Format tanggal pada tabel/laporan menggunakan Bahasa Indonesia (`07 November 2026`), sedangkan tampilan input tanggal mengikuti locale browser.
-- Data hanya tersimpan di browser yang dipakai. Menghapus data situs/browser akan menghapus data aplikasi.
-- Prototype ini mengutamakan alur dan tampilan MVP; aturan produksi seperti hak akses pengguna, audit trail, dan validasi server belum termasuk.
-
-## Struktur Proyek
-
-```text
-.
-├── index.html
-├── README.md
-└── assets
-    ├── css
-    │   └── app.css          # Design system, layout, responsive, dan print styles
-    └── js
-        ├── utils.js         # Format Rupiah/tanggal, helper umum
-        ├── seed.js          # Data demo dan skema awal
-        ├── barcode.js       # Generator barcode Code 39 (SVG)
-        ├── store.js         # State, CRUD, transaksi, statistik, ekspor/impor
-        ├── ui.js            # Ikon, modal, toast, badge, chart, pagination, print
-        ├── router.js        # Hash router dan lifecycle halaman
-        ├── app.js           # Shell sidebar/topbar dan inisialisasi
-        └── pages/           # Modul per halaman (render/mount/destroy)
+```bash
+php artisan test
 ```
 
-## Teknologi
+Pengujian menggunakan SQLite in-memory (`phpunit.xml`) dengan `RefreshDatabase`, sehingga tidak menyentuh basis data MySQL pengembangan. Cakupan tes mencakup autentikasi, otorisasi per peran, alur pembelian/penjualan/pembayaran/void, total laporan, ekspor CSV/PDF, serta ekspor/impor cadangan.
 
-- HTML5, CSS3, dan JavaScript vanilla (ES2017+).
-- Hash routing tanpa framework.
-- Data awal dan persistensi melalui localStorage.
-- Ikon SVG inline dan barcode Code 39 yang dirender sebagai SVG.
-- Tanpa CDN, font eksternal, atau dependensi runtime.
+## Struktur Penting
 
-## Lisensi
+```
+app/
+├── Enums/                 # UserRole, GoatStatus, PaymentMethod, dll.
+├── Http/Controllers/      # Controller per modul
+├── Http/Requests/         # Validasi form
+├── Models/                # Eloquent model
+├── Policies/              # Otorisasi per peran
+└── Services/              # Logika transaksi, laporan, cadangan, sequence
+resources/views/           # Blade: dashboard, kambing, transaksi, laporan, dll.
+public/assets/             # CSS & JS tanpa build step
+database/seeders/          # UserSeeder & DemoDataSeeder
+```
 
-Prototype internal untuk keperluan demo dan validasi alur bisnis Kamsya.
+## Catatan Implementasi
+
+- **HPP** memakai biaya perolehan penuh: harga beli + biaya tambahan pembelian.
+- Nilai `sales.cost_price` adalah **snapshot permanen** saat penjualan dibuat dan tidak berubah meski pembelian diubah.
+- Riwayat transaksi tidak dihapus permanen: kambing/master data diarsipkan (`deleted_at`), transaksi keuangan di-void (`voided_at`).
+- Kode dokumen dibentuk dari sequence (`KMB-0001`, `TRX-B-2026-001`, `TRX-J-2026-001`) dengan PK numerik internal.
+- Transaksi memakai `DB::transaction` dan penguncian baris untuk mencegah benturan stok/pembayaran.
